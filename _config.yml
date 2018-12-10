@@ -3,7 +3,7 @@ logo: /assets/img/logo.png
 description: It's time to blog.
 show_downloads: false
 google_analytics:
-theme: jekyll-theme-slate
+theme: jekyll-theme-minimal
 #
 # !! You don't need to change any of the configuration flags below !!
 #
