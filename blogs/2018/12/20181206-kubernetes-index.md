@@ -1,3 +1,11 @@
+---
+title: "My Kubernetes learning"
+categories:
+  - k8s
+  - kubernetes
+  - microservice
+---
+
 My Kubernetes learning
 ======================
 So recently I am pulled into a project that customer wants to use microservice to build their new platform. I never experienced microservice before, but it's always good to learn something new. Most attractively, we can ~~test~~ work on a production microservice application !

@@ -4,6 +4,11 @@ description: It's time to blog.
 show_downloads: false
 google_analytics:
 theme: jekyll-theme-slate
+search: true
+paginate: 5
+main:
+  - title: "Categories"
+    url: /categories/
 #
 # !! You don't need to change any of the configuration flags below !!
 #
