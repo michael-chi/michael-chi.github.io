@@ -1,4 +1,5 @@
 ---
+layout: post
 title: "My Kubernetes learning"
 categories:
   - k8s
