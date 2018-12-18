@@ -49,7 +49,7 @@ Now I have a target, let's break them into smaller tasks. I need...
 <h2>What's next</h2>
 I will blog task by task to accomplish above goal. There has been a lot documents talking about setup Kubernetes cluster. So I will not repeat them. For me,I just followed <a href="https://kubernetes.io/docs/getting-started-guides/ubuntu/installation/">official documents</a> to setup an two node (master and slave) cluster.
 
-- <a href="./2018-12-06-kubernetes-create-sample-app">Create a sample 2-tier hello-world application</a>
+- <a href="./2018-12-06-kubernetes-create-sample-app.md">Create a sample 2-tier hello-world application</a>
 - Create Azure DevOps project and an Azure Container Registry
 - Create a Build Pipeline
 - Create a Release Pipeline

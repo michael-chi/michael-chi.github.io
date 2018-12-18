@@ -165,12 +165,90 @@ Alghouth we can run linux container on Windwos machine now. It sometimes conflic
 
 - If you haven't install docker yet. Follow [official instruction](https://docs.docker.com/install/linux/docker-ce/ubuntu/) to install and configure Docker in your Ubuntu machine
 
-- Copy everything we just created to the machine (I know, it's stupid, but we will make this better later)
+- Copy everything we just created to the machine (We will make this better later)
 
-- 
+- Now we need two Dockerfile, each creates an image for our applications
+
+<h2>Create Dockerfile for applications</h2>
+
+- Create a new file named "Dockerfile" under frontend folder
+
+- Input below content and save.
+  - First we start a docker image from microsoft/dotnet:2.1-sdk image
+
+  - Then we copy everything in our project folder to destination's /app folder (inside the container)
+
+  - And do dotnet restore to restore dependencies
+  
+  - Do dotnet publish to publish binaries
+
+  - Then we copy our output binary to /app folder
+
+  - When the container image gets launch, execute "dotnet frontend.dll" command to launch our web application
+
+```docker
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /app
+
+COPY . .
+WORKDIR /app/frontend
+RUN dotnet restore
+
+RUN dotnet publish -c Release -o out
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+WORKDIR /app
+COPY --from=build /app/frontend/out ./
+
+ENTRYPOINT ["dotnet", "frontend.dll"]
+```
+
+  - Similarly, start a new Dockerfile under backend folder
+
+```docker
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /app
+
+COPY . .
+WORKDIR /app/backend
+RUN dotnet restore
+
+RUN dotnet publish -c Release -o out
+
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+WORKDIR /app
+COPY --from=build /app/backend/out ./
+
+ENTRYPOINT ["dotnet", "backend.dll"]
+```
+
+  -   In order to verify, we created a docker-compose.yml.
+
+```yaml
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5106:5106"
+  frontend:
+    build: ./frontend
+    environment:
+      - BACKEND_HOST=backend
+      - BACKEND_PORT=5106
+    ports:
+      - "5107:5107"
+    depends_on:
+      - backend
+
+```
+  -   To run the application, execute below command in the folder which contains docker-compose.yml
 
 
-<h2>Create an Azure DevOps project</h2>
+```shell
+docker-compose up
+```
 
-<h2>Create a dummy ASP.Net core web site</h2>
+  -   Launch a browser and navigate to http://localhost:5107, you should see below result
 
+<img src="media/20181218-docker-run-backend-001.jpg">
