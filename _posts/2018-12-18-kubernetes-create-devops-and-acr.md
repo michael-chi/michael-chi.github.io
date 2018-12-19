@@ -25,3 +25,28 @@ It's very simple to setup an Azure Container Registry
 -   You can also find Login Server URL here, note down the url, we will need it later.
 
 <img src="media/20181218-acr-console.jpg"/>
+
+Push docker images to Azure Containr Registry
+=============================================
+
+- Now we have our ACR up and running, I want to push my newly created docker images to my Azure Container Registry. Execute below command to login to my ACR
+  - User Name, Password and Login Server URI are retrieved from ACR console shown above
+  - 
+
+```shell
+docker login -p <PWD> -u <USER> myacrdemo001.azureacr.io
+```
+
+- Then we push our images to ACR
+
+```shell
+docker tag kalschi/frontend <ACRNAME>.azurecr.io/<IMAGE NAME>
+
+docker push <ACRNAME>.azurecr.io/<IMAGE NAME>
+```
+
+<img src="media/20181220-docker-push.jpg"/>
+
+- Push both frontend and backend to ACR.
+
+<img src="media/20181218-acr-images.jpg" />

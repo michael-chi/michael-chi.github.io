@@ -66,6 +66,26 @@ spec:
 
 -   Frontend Service defination file
 
+It's easier than deployment defination file, in a service defination, we just tell kubernetes that which deployment we want to use as its underlying service provider. Here we specify selector under spec to have kubernets search for any deployments that has app metadata matches "twotier-backend" and tier matches "backend"
+
+Now one thing worth notice is the "type" field. In kubernets, you specify service type by giving it one of below values:
+    
+    - NodePort
+    Expose the service's specified ports to host node's Cluster IP address. A Cluster IP is a virtual IP address that a node gets assigned by software network.  
+
+    - ClusterIP (Default)
+    Expose the service on a internal cluster IP address, makes this service accessible only from within kubernetes cluster.
+
+    - LoadBalancer
+    Expose the serviec to external using a cloud provider's load balancer mechanism
+
+    - ExternalName
+    Maps the service to the content of the external name field.
+
+I am using NodePort here, other type I've successfully tested in my Azure environment so far are ClusterIP.
+
+Below is my service defination file. We can combine deployment and service defination into one single yaml file by separating them with '---'
+
 ```yaml
 kind: Service
 apiVersion: v1
@@ -82,3 +102,9 @@ spec:
     targetPort: http
   type: NodePort
 ```
+
+- Create deployment and service defination for frontend service.
+  - <a href="references/k8s/deployment.yml">Sample deployment defination</a>
+  - <a href="references/k8s/service.yml">Sample service defination</a>
+
+- 
