@@ -50,3 +50,61 @@ docker push <ACRNAME>.azurecr.io/<IMAGE NAME>
 - Push both frontend and backend to ACR.
 
 <img src="media/20181218-acr-images.jpg" />
+
+Azure DevOps
+============
+
+Azure Pipelines allows you to continously build, test, deploy from source controls of your choice to any platform and cloud of your choice. In addition to built-in host, tasks. It alos allows you to create your own agent host in your environment to fulfill special requirements.
+
+In this lab I am using Azure Pipelines to build my applications into docker images, then deploy them to my kubernetes cluster.
+
+- Create Azure DevOps
+
+To start, go to https://devops.azure.com and start free. Free tier come with 5 users with full features.
+
+- Create Project
+
+Once signed in, click "Create Project" to start a new project
+
+<img src="media/20181218-devops-create-project.jpg"/>
+
+- Once created, notedown the command and url to push your code, we will need them later
+
+<img src="media/20181220-devops-project-init.jpg"/>
+
+- Next we want to create an access token for us to access our Repo from local machine. Go to Security tab
+  
+<img src="media/20181220-create-token-1.jpg" />
+
+- Create a new Token
+
+<img src="media/20181220-create-token-2.jpg" />
+
+- Give this token full access, hit "Create". Note that once you hit create, Token will be shown on the page and it will not be shown again once you go next step. SO NOTE IT DOWN here.
+
+<img src="media/20181220-create-token-3.jpg" />
+
+- Now go to your development machine, switch to your source code folder. We need to push our codes.
+
+```shell
+git init
+git add .
+git commit -m "init"
+
+```
+
+<img src="media/20181220-acr-commit-codes.jpg"/>
+
+- Then use those commands we noted to push our codes
+
+```
+git remote add origin https://<YOUR USER>@dev.azure.com/<YOUR ORG>/<YOUR PROJECT>/_git/<YOUR PROJECT>
+
+git push -u origin --all
+```
+
+<img src="media/20181220-git-push.jpg" />
+
+- When promoted to enter password, input the access token you created
+
+<img src="media/20181220-my-repo.jpg" />
