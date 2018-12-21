@@ -1,5 +1,5 @@
-Create a Build pipeline
-=======================
+Deploy applications to Kubernetes
+================================
 
 Next step I want to create a build pipeline to automatically build my application into Kubernetes applications. In order to do so, I need:
 
