@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: twotier-backend
+spec:
+  selector:
+    matchLabels:
+      app: twotier-backend
+      tier: backend
+      track: stable
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: twotier-backend
+        tier: backend
+        track: stable
+    spec:
+      containers:
+        - name: twotier-backend
+          image: myacr001.azurecr.io/k8sbackend:latest
+          ports:
+            - name: http
+              containerPort: 5106
+      imagePullSecrets:
+        - name: mysecret
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: app-backend
+spec:
+  selector:
+    app: twotier-backend
+    tier: backend
+  ports:
+  - protocol: TCP
+    port: 5106
+    targetPort: 5106
+    nodePort: 5106
+  type: NodePort

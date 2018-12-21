@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: twotier-frontend
-          image: myacr001.azurecr.io/frontend-app:latest
+          image: myacr001.azurecr.io/k8sfrontend:latest
           ports:
             - name: http
               containerPort: 5107
@@ -28,7 +28,7 @@ spec:
           - name: BACKEND_PORT
             value: "5106"
       imagePullSecrets:
-        - name: myk8ssecret001
+        - name: mysecret
 ---
 apiVersion: v1
 kind: Service
@@ -42,4 +42,5 @@ spec:
   - protocol: "TCP"
     port: 5107
     targetPort: 5107
+    nodePort: 32001
   type: NodePort

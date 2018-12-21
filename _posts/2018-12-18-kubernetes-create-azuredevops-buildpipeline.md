@@ -15,7 +15,11 @@ In a high-level view, I need to create two deployments for my backend and fronte
 
 A deployment is a minimal deplpyment unit, it can container one or more applications in it. These applications are considered a basic unit to deploy to k8s cluster, and should have same life cycle.
 
-A service is an abstraction which defines a logical set of Pods and a policy by which to access them.
+A service is an abstraction which defines a logical set of Pods and a policy by which to access them. It also provides a virtual loadbalancer that accepts incoming traffic from outside of services
+
+A High level chart may look like this
+
+<img src="media/20181221-high-level-k8s-service.jpg"/>
 
 In order to have my frontend and backend running on kubernetes cluster, I need to create two deployment files, and two services file.
 
@@ -24,6 +28,36 @@ In order to have my frontend and backend running on kubernetes cluster, I need t
 -   Create a Kubernetes secret
 
 -   Frontend deployment defination
+
+Create Kubernets Namespaces and Secrets
+=======================================
+Now, before actually create a build and release pipeline to deploy our applications to kubernetes. I'd like to first manually deploy to understand what are required steps.
+
+As mentioned, we want to store credentials or secrets somewhere safe. Here I am using Kubernetes secret to store my Azure Container Registry credential. In addition, to isolate my different applications, I will be creating a namespace for each application.
+
+- To Create a namespace, execute below command
+
+```shell
+kubectl create namespace <NAMESPACE>
+```
+
+<img src="media/20181221-k8s-create-namespace.jpg" />
+
+- To create Kubernets secret, ssh into your k8s node or where you have kubectl tool installed. 
+
+```shell
+kubectl create secret docker-registry <SECRET NAME> --docker-server <ACR NAME>.azurecr.io --docker-email michi@microsoft.com --docker-username=<USER NAME> --docker-password <PASSOWRD> -n=mydemo
+
+```
+
+<img src="media/20181221-k8s-create-secret.jpg"/>
+
+Create Deployment and Service Defination
+========================================
+
+To deploy application to kubernets, you first specify deployments, then define services that use deployments as underlying service providers.
+
+- Deployment defination
 
 ```yaml
 apiVersion: apps/v1
@@ -41,6 +75,7 @@ spec:
       app: twotier-backend
       tier: backend
       track: stable
+# How many replicas
   replicas: 1
   template:
     metadata:
@@ -61,7 +96,7 @@ spec:
               containerPort: 5106
       imagePullSecrets:
 #   Here we pull our Container Registry credentail from kubernets secret we created in above step
-        - name: myazureacrsecret001
+        - name: mydemo
 ```
 
 -   Frontend Service defination file
@@ -86,6 +121,8 @@ I am using NodePort here, other type I've successfully tested in my Azure enviro
 
 Below is my service defination file. We can combine deployment and service defination into one single yaml file by separating them with '---'
 
+- Service Defination
+
 ```yaml
 kind: Service
 apiVersion: v1
@@ -98,13 +135,28 @@ spec:
     tier: backend
   ports:
   - protocol: TCP
+  # Expose 5106 to Cluster IP (Virtual or Physical IP)
     port: 5106
-    targetPort: http
+  # Target Deployment's 5106 port
+    targetPort: 5106
+  # Expose 5106 port to Physical Node Host
+    nodePort: 5106
   type: NodePort
 ```
 
 - Create deployment and service defination for frontend service.
-  - <a href="references/k8s/deployment.yml">Sample deployment defination</a>
-  - <a href="references/k8s/service.yml">Sample service defination</a>
+  - <a href="references/k8s/backend.yml">Sample backend defination</a>
+  - <a href="references/k8s/frontend.yml">Sample frontend defination</a>
 
-- 
+Manually Deploy applications to Kubernetes cluster
+==================================================
+
+- To manually deploy our services to kubernetes cluster, simply run 
+
+```shell
+kubectl apply -f <YAML FILE> -n <NAMESAPCE>
+```
+
+- Verify frontend and backend.
+
+<img src="media/20181221-verify-k8s-deployments.jpg"/>
