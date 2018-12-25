@@ -139,8 +139,8 @@ spec:
     port: 5106
   # Target Deployment's 5106 port
     targetPort: 5106
-  # Expose 5106 port to Physical Node Host
-    nodePort: 5106
+  # Expose 31001 port to Physical Node Host, valid port range 30000-32767
+    nodePort: 31001 
   type: NodePort
 ```
 
