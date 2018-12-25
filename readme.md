@@ -49,10 +49,10 @@ Now I have a target, let's break them into smaller tasks. I need...
 <h2>What's next</h2>
 I will blog task by task to accomplish above goal. There has been a lot documents talking about setup Kubernetes cluster. So I will not repeat them. For me,I just followed <a href="https://kubernetes.io/docs/getting-started-guides/ubuntu/installation/">official documents</a> to setup an two node (master and slave) cluster.
 
-- <a href="./2018-12-06-kubernetes-create-sample-app.md">Create a sample 2-tier hello-world application</a>
-- <a href="./2018-12-18-kubernetes-create-devops-and-acr.md">Use Azure Container Registry</a>
-- <a href="./2018-12-18-kubernetes-manual-deployment.md">Manual Deployment</a>
-- <a href="./2018-12-25-kubernetes-devops-deployment.md">Create a Build Pipeline</a>
-- Create a Release Pipeline
+- <a href="../_posts/2018-12-06-kubernetes-create-sample-app.md">Create a sample 2-tier hello-world application</a>
+- <a href="../_posts/2018-12-18-kubernetes-create-devops-and-acr.md">Use Azure Container Registry</a>
+- <a href="../_posts/2018-12-18-kubernetes-manual-deployment.md">Manual Deployment</a>
+- <a href="../_posts/2018-12-25-kubernetes-devops-deployment.md">Create a Build Pipeline</a>
+- <a href="./_posts/2018-12-25-kubernetes-create-release-pipeline.md">Create a Release Pipeline</a>
 - Running on Kubernetes
 - Configure Ingress

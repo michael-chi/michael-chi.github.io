@@ -37,5 +37,5 @@ spec:
   - protocol: TCP
     port: 5106
     targetPort: 5106
-    nodePort: 5106
+    nodePort: 31000
   type: NodePort
