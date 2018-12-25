@@ -10,6 +10,7 @@ Reference
 =========
 -   [Build, test, and push Docker container apps in Azure Pipelines](https://docs.microsoft.com/en-us/azure/devops/pipelines/languages/docker?view=vsts&tabs=yaml)
 
+-   [Source code](../src/)
 
 Create a Build Pipeline
 =======================
@@ -188,3 +189,5 @@ In previous step, I hardcoded user name and password for my Azure Container Regi
 -   Commit and kickoff a new build
 
 <img src="media/20181225-build-secret-test.jpg"/>
+
+-   You can create other pipeline variables for other parameters in yaml file so that those parameters can be changed at runtime instead of in source codes.

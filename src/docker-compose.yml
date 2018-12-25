@@ -1,0 +1,15 @@
+version: '3'
+services:
+  backend:
+    build: ./backend
+    ports:
+      - "5106:5106"
+  frontend:
+    build: ./frontend
+    environment:
+      - BACKEND_HOST=backend
+      - BACKEND_PORT=5106
+    ports:
+      - "5107:5107"
+    depends_on:
+      - backend
