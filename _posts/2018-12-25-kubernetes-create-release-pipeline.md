@@ -77,3 +77,7 @@ sudo cat $HOME/.kube/config
 -   Update cloned task to reference backend.yaml. And move backend task to first task. Then Save this Pipeline.
 
 <img src="media/20181206-release-clone-task-2.jpg"/>
+
+-   Start a new release, wait and verify the deployment.
+
+<img src="media/20181206-release-verify-result.jpg"/>
